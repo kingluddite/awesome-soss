@@ -1,0 +1,45 @@
+{
+  "name": "fastshell",
+  "title": "Fiercely quick and opinionated front-ends",
+  "author": "Hossein Karami",
+  "url": "https://HosseinKarami.github.io/fastshell",
+  "version": "1.0.5",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/HosseinKarami/fastshell.git"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-cache": "^0.4.5",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-header": "^1.7.1",
+    "gulp-if-else": "^1.0.3",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-jshint": "^2.0.0",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.8.0",
+    "babel-cli": "^6.11.4",
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-watch": "^4.3.9",
+    "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.3",
+    "font-awesome": "^4.6.3"
+  }
+}
