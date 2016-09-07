@@ -216,7 +216,7 @@ gulp.task('dist', ['html', 'sass', 'js', 'images', 'browser-sync'], () => {
   // matches any file with a .scss extension in dist/scss or a child directory
   gulp.watch(currentEnv.src.sass + '**/*.scss', ['sass']);
   gulp.watch(currentEnv.src.js + '*.js', ['js']);
-  gulp.watch(currentEnv.src.html + '*.html', ['bs-reload']);
+  gulp.watch(currentEnv.src.html + '*.html', ['html', 'bs-reload']);
   gulp.watch(currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}', ['images']);
 });
 
