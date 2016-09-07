@@ -115,7 +115,7 @@ gulp.task( 'sass', () => {
 } );
 
 gulp.task( 'html', function() {
-  return gulp.src( currentEnv.src.html)
+  return gulp.src( currentEnv.src.html + '*.html' )
    .pipe( gulp.dest( currentEnv.dist.html));
 });
 
