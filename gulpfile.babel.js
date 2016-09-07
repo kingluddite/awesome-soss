@@ -93,7 +93,7 @@ var banner = [
 ].join('');
 
 gulp.task('html', () => {
-  return gulp.src(curentEnv.src.html + '*.html')
+  return gulp.src(currentEnv.src.html + '*.html')
     .pipe($.plumber())
     .pipe(gulp.dest(currentEnv.dist.html));
 });
