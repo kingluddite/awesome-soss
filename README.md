@@ -1,11 +1,16 @@
 # Awesome SOSS
 `S`tructured `O`n `S`omething `S`pecial
 
-`$ npm install'
-'$ gulp'
+`$ npm install`
+`$ gulp`
+
+Get SSH working on your remote server
+Log in as root
+
+
 
 For Production do this
-`$ npm install --production` 
+`$ npm install --production`
 
 ## Tools Using
 * jshint with ES6
@@ -65,4 +70,3 @@ For Production do this
   - SSH public key
 * .editorconfig
 * not using bower and trying to do everything with node
-
