@@ -42,10 +42,10 @@ var paths = {
     },
     'dist': {
       // example using Digital Ocean
-      'css': '/var/www/html/assets/css/',
-      'js': '/var/www/html/assets/js/',
-      'fonts': '/var/www/html/assets/fonts/',
-      'images': '/var/www/html/assets/img/'
+      'css': '/var/www/assets/css/',
+      'js': '/var/www/assets/js/',
+      'fonts': '/var/www/assets/fonts/',
+      'images': '/var/www/assets/img/'
     }
   }
 };
