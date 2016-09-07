@@ -23,18 +23,20 @@ var paths = {
       'js': './src/js/',
       'images': './src/img/',
       'fonts': './src/fonts/',
-      'html': './dist/'
+      'html': './src/'
     },
     'dist': {
       'css': './dist/assets/css/',
       'js': './dist/assets/js/',
       'fonts': './dist/assets/fonts/',
-      'images': './dist/assets/img/'
+      'images': './dist/assets/img/',
+      'html': './dist/'
     }
   },
   // for our production server
   'production': {
     'src': {
+      'html': './src/',
       'sass': './src/scss/',
       'js': './src/js/',
       'images': './src/img/',
@@ -42,10 +44,11 @@ var paths = {
     },
     'dist': {
       // example using Digital Ocean
-      'css': '/var/www/assets/css/',
-      'js': '/var/www/assets/js/',
-      'fonts': '/var/www/assets/fonts/',
-      'images': '/var/www/assets/img/'
+      'html': '/var/www/thm/',
+      'css': '/var/www/thm/assets/css/',
+      'js': '/var/www/thm/assets/js/',
+      'fonts': '/var/www/thm/assets/fonts/',
+      'images': '/var/www/thm/assets/img/'
     }
   }
 };
@@ -110,6 +113,11 @@ gulp.task( 'sass', () => {
     .pipe( gulp.dest( currentEnv.dist.css ) )
     .pipe( browserSync.reload( { stream: true } ) );
 } );
+
+gulp.task( 'html', function() {
+  return gulp.src( currentEnv.src.html)
+   .pipe( gulp.dest( currentEnv.dist.html));
+});
 
 /**
  *
@@ -181,7 +189,7 @@ gulp.task( 'clean', del.bind( null, [ 'dist/assets/' ] ) );
  *
  */
 
-gulp.task( 'dist', [ 'sass', 'js', 'images', 'browser-sync' ], () => {
+gulp.task( 'dist', [ 'html', 'sass', 'js', 'images', 'browser-sync' ], () => {
   // globbing
   // matches any file with a .scss extension in dist/scss or a child directory
   gulp.watch( currentEnv.src.sass + '**/*.scss', [ 'sass' ] );
