@@ -5,10 +5,10 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 // import browserSync from 'browser-sync';
 import del from 'del';
 
-var argv = require( 'yargs' ).argv;
-var browserSync = require( 'browser-sync' ).create();
-var gutil = require( 'gulp-util' );
-var thePackage = require( './package.json' );
+var argv = require('yargs').argv;
+var browserSync = require('browser-sync').create();
+var gutil = require('gulp-util');
+var thePackage = require('./package.json');
 // Remove existing docs and dist build
 
 const reload = browserSync.reload;
@@ -67,8 +67,12 @@ function checkEnv() {
 
   $.ifElse(
     environment,
-    function() { currentEnv = paths.production; },
-    function() { currentEnv = paths.local; }
+    function() {
+      currentEnv = paths.production;
+    },
+    function() {
+      currentEnv = paths.local;
+    }
   );
 
   return currentEnv;
@@ -86,9 +90,12 @@ var banner = [
   ' * Copyright ' + new Date().getFullYear() + '. <%= thePackage.license %> licensed.\n' +
   ' */',
   '\n'
-].join( '' );
+].join('');
 
-
+gulp.task('html', () => {
+  return gulp.src(currentEnv.src.html + '*.html')
+    .pipe(gulp.dest(currentEnv.dist.html));
+});
 
 /**
  *
@@ -96,23 +103,31 @@ var banner = [
  *
  */
 
-gulp.task( 'sass', () => {
-  return gulp.src( currentEnv.src.sass + 'style.scss' )
-    .pipe( $.plumber() )
+gulp.task('sass', () => {
+  return gulp.src(currentEnv.src.sass + 'style.scss')
+    .pipe($.plumber())
     // expanded
-    .pipe( $.sourcemaps.init() )
-    .pipe( $.sass().on( 'error', $.sass.logError ) )
-    .pipe( $.autoprefixer( { browsers: [ 'last 4 version' ] } ) )
-    .pipe( gulp.dest( currentEnv.dist.css ) )
+    .pipe($.sourcemaps.init())
+    .pipe($.sass().on('error', $.sass.logError))
+    .pipe($.autoprefixer({
+      browsers: ['last 4 version']
+    }))
+    .pipe(gulp.dest(currentEnv.dist.css))
     // compressed
     // minify the concatenated CSS
-    .pipe( $.cssnano() )
-    .pipe( $.rename( { suffix: '.min' } ) )
-    .pipe( $.header( banner, { thePackage: thePackage } ) )
-    .pipe( $.sourcemaps.write() )
-    .pipe( gulp.dest( currentEnv.dist.css ) )
-    .pipe( browserSync.reload( { stream: true } ) );
-} );
+    .pipe($.cssnano())
+    .pipe($.rename({
+      suffix: '.min'
+    }))
+    .pipe($.header(banner, {
+      thePackage: thePackage
+    }))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest(currentEnv.dist.css))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
+});
 
 gulp.task( 'html', function() {
   return gulp.src( currentEnv.src.html + '*.html' )
@@ -126,13 +141,15 @@ gulp.task( 'html', function() {
  */
 
 
-gulp.task( 'images', function() {
+gulp.task('images', function() {
   // grab only the stuff in images with these extensions {png,jpg,gif,svg,ico}
-  return gulp.src( currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}' )
-    .pipe( $.newer( currentEnv.dist.images ) )
-    .pipe( $.imagemin( { progressive: true } ) )
-    .pipe( gulp.dest( currentEnv.dist.images ) );
-} );
+  return gulp.src(currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}')
+    .pipe($.newer(currentEnv.dist.images))
+    .pipe($.imagemin({
+      progressive: true
+    }))
+    .pipe(gulp.dest(currentEnv.dist.images));
+});
 
 /**
  *
@@ -140,20 +157,29 @@ gulp.task( 'images', function() {
  *
  */
 
-gulp.task( 'js', () => {
-  gulp.src( currentEnv.src.js + 'scripts.js' )
-    .pipe( $.sourcemaps.init() )
-    .pipe( $.jshint( '.jshintrc' ) )
-    .pipe( $.jshint.reporter( 'default' ) )
-    .pipe( $.header( banner, { thePackage: thePackage } ) )
-    .pipe( gulp.dest( currentEnv.dist.js ) )
-    .pipe( $.uglify() )
-    .pipe( $.header( banner, { thePackage: thePackage } ) )
-    .pipe( $.rename( { suffix: '.min' } ) )
-    .pipe( $.sourcemaps.write() )
-    .pipe( gulp.dest( currentEnv.dist.js ) )
-    .pipe( browserSync.reload( { stream: true, once: true } ) );
-} );
+gulp.task('js', () => {
+  gulp.src(currentEnv.src.js + 'scripts.js')
+    .pipe($.sourcemaps.init())
+    .pipe($.jshint('.jshintrc'))
+    .pipe($.jshint.reporter('default'))
+    .pipe($.header(banner, {
+      thePackage: thePackage
+    }))
+    .pipe(gulp.dest(currentEnv.dist.js))
+    .pipe($.uglify())
+    .pipe($.header(banner, {
+      thePackage: thePackage
+    }))
+    .pipe($.rename({
+      suffix: '.min'
+    }))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest(currentEnv.dist.js))
+    .pipe(browserSync.reload({
+      stream: true,
+      once: true
+    }));
+});
 
 /**
  *
@@ -162,18 +188,18 @@ gulp.task( 'js', () => {
  */
 
 // enable Gulp to spin up a server
-gulp.task( 'browser-sync', () => {
-  browserSync.init( null, {
+gulp.task('browser-sync', () => {
+  browserSync.init(null, {
     // let BrowserSync know where the root of the should be (`dist`)
     server: {
       // our root distribution (production) folder is `dist`
       baseDir: "dist"
     }
-  } );
-} );
-gulp.task( 'bs-reload', () => {
+  });
+});
+gulp.task('bs-reload', () => {
   browserSync.reload();
-} );
+});
 
 /**
  *
@@ -181,7 +207,7 @@ gulp.task( 'bs-reload', () => {
  *
  */
 
-gulp.task( 'clean', del.bind( null, [ 'dist/assets/' ] ) );
+gulp.task('clean', del.bind(null, ['dist/assets/']));
 
 /**
  *
@@ -190,14 +216,15 @@ gulp.task( 'clean', del.bind( null, [ 'dist/assets/' ] ) );
  */
 
 gulp.task( 'dist', [ 'html', 'sass', 'js', 'images', 'browser-sync' ], () => {
+
   // globbing
   // matches any file with a .scss extension in dist/scss or a child directory
-  gulp.watch( currentEnv.src.sass + '**/*.scss', [ 'sass' ] );
-  gulp.watch( currentEnv.src.js + '*.js', [ 'js' ] );
-  gulp.watch( currentEnv.src.html + '*.html', [ 'bs-reload' ] );
-  gulp.watch( currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}', [ 'images' ] );
-} );
+  gulp.watch(currentEnv.src.sass + '**/*.scss', ['sass']);
+  gulp.watch(currentEnv.src.js + '*.js', ['js']);
+  gulp.watch(currentEnv.src.html + '*.html', ['html', 'bs-reload']);
+  gulp.watch(currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}', ['images']);
+});
 
-gulp.task( 'default', [ 'clean' ], () => {
-  gulp.start( 'dist' );
-} );
+gulp.task('default', ['clean'], () => {
+  gulp.start('dist');
+});
