@@ -23,7 +23,7 @@ var paths = {
       'js': './src/js/',
       'images': './src/img/',
       'fonts': './src/fonts/',
-      'html': './dist/'
+      'html': './src/'
     },
     'dist': {
       'css': './dist/assets/css/',
@@ -36,7 +36,7 @@ var paths = {
   // for our production server
   'production': {
     'src': {
-      'html': './dist/',
+      'html': './src/',
       'sass': './src/scss/',
       'js': './src/js/',
       'images': './src/img/',
@@ -44,7 +44,7 @@ var paths = {
     },
     'dist': {
       // example using Digital Ocean
-      'html': '.var/www/',
+      'html': '/var/www/',
       'css': '/var/www/assets/css/',
       'js': '/var/www/assets/js/',
       'fonts': '/var/www/assets/fonts/',
@@ -93,8 +93,8 @@ var banner = [
 ].join('');
 
 gulp.task('html', () => {
+  gutil.log(currentEnv.src.html + '*.html');
   return gulp.src(currentEnv.src.html + '*.html')
-    .pipe($.plumber())
     .pipe(gulp.dest(currentEnv.dist.html));
 });
 
