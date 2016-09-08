@@ -5,10 +5,10 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 // import browserSync from 'browser-sync';
 import del from 'del';
 
-var argv = require('yargs').argv;
-var browserSync = require('browser-sync').create();
-var gutil = require('gulp-util');
-var thePackage = require('./package.json');
+var argv = require( 'yargs' ).argv;
+var browserSync = require( 'browser-sync' ).create();
+var gutil = require( 'gulp-util' );
+var thePackage = require( './package.json' );
 // Remove existing docs and dist build
 
 const reload = browserSync.reload;
