@@ -238,7 +238,7 @@ The important parts of this file you need to focus on now is:
 `export DEPLOY_ROOT="${HOME}/repos/awesome-soss.git"` - the root deploy directory
 
 `POST_UPDATE_CMD='cd ${DEPLOY_ROOT} && npm install && gulp --production'` - this
-will install on our remote server all the node_modules and then it will run our
+will install on our remote server all the `node_modules` and then it will run our
 production version of gulp.
 
 So if you open our `gulpfile.babel.js`, this is a modern version of the traditional
