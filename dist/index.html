@@ -1,37 +1,97 @@
 <!doctype html>
 <html class="no-js">
 
-  <head>
-    <meta charset="utf-8">
-    <title>Awesome Sauce Workflow</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href="assets/css/style.min.css" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <title>Awesome Sauce Workflow</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="assets/css/style.min.css" rel="stylesheet">
+</head>
 
-  <body>
+<body>
+  <div class="container">
     <header class="header" role="banner">
       <div class="logo">
         <a href="/">
-          <img src="assets/img/awesome-sauce.jpg" alt="Logo">
+          <!-- <img src="assets/img/awesome-sauce.jpg" alt="Logo"> -->
         </a>
       </div>
-      <nav class="nav" role="navigation">
+      <nav class="flex-nav nav">
+        <a href="#" class="toggle-nav menu-icon">&#9776 Menu</a>
         <ul>
-          <li>
-            <a href="/"></a>
+          <li><a href="#">Item 01</a></li>
+          <li><a href="#">Item 02</a></li>
+          <li><a href="#">Item 03</a></li>
+          <li><a href="#">Item 04</a></li>
+          <li><a href="#">Item 05</a></li>
+          <li><a href="#">Item 06</a></li>
+          <li class="social">
+            <a href="#"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li class="social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+          </li>
+          <li class="social">
+            <a href="#"><i class="fa fa-github"></i></a>
+          </li>
+          <li class="social">
+            <a href="#"><i class="fa fa-instagram"></i></a>
           </li>
         </ul>
       </nav>
     </header>
+    <!-- END .header -->
     <main class="main" role="main">
+      <h4>Look-see</h4>
+      <hr>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <h2>Hi Bootstrap 4.</h2>
+          <button type="button" class="btn btn-primary btn-lg">Primary</button>
+          <button type="button" class="btn btn-secondary btn-lg">Secondary</button>
+          <br><br>
+        </div>
+        <div class="col-md-6 col-lg-8">
+          <div class="card card-primary card-inverse">
+            <div class="card-block">
+              <h4 class="card-title">Card title</h4>
+              <p>
+                Bootstrap 4 has been a massive undertaking that touches nearly every line of code. We’re stoked to share it with you and hear your feedback. We’ve got a lot of news to share with you, so let’s jump right into it.
+              </p>
+              <button class="btn btn-default pull-right">Click</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <button type="button" class="btn btn-success">Success</button>
+          <button type="button" class="btn btn-info">Info</button>
+          <button type="button" class="btn btn-warning">Warning</button>
+          <button type="button" class="btn btn-danger">Danger</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-block btn-primary-outline">Primary</button>
+          <button type="button" class="btn btn-block btn-secondary-outline">Secondary</button>
+          <button type="button" class="btn btn-block btn-success-outline">Success</button>
+          <button type="button" class="btn btn-block btn-info-outline">Info</button>
+          <button type="button" class="btn btn-block btn-warning-outline">Warning</button>
+          <button type="button" class="btn btn-block btn-danger-outline">Danger</button>
+        </div>
+      </div>
+      <!-- END .row -->
     </main>
+    <!-- END .main -->
     <aside class="sidebar" role="complementary">
     </aside>
+    <!-- END .sidebar -->
     <footer class="footer" role="contentinfo">
     </footer>
-    <script src="assets/js/scripts.min.js"></script>
-  </body>
+    <!-- END .footer -->
+  </div>
+  <!-- END .container -->
+  <script src="assets/js/compiled-bundle.min.js"></script>
+  <script src="assets/js/scripts.min.js"></script>
+</body>
 
 </html>
