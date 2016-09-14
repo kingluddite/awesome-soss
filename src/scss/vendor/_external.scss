@@ -1,2 +1,23 @@
+// we want to work with flexbox instead of floats
+$enable-flex           : true;
+$enable-grid-classes   : true;
+$grid-breakpoints      : ( xs: 0, sm: 600px, md: 800px, lg: 1000px, xl: 1200px ) !default;
+// $container-max-widths  : ( sm: 600px, md: 800px, lg: 1000px, xl: 90% ) !default;
+$body-bg               : #333;
+$body-color            : #999;
+$border-radius         : 1px;
+$brand-primary         : #3333cc;
+$brand-success         : #11cc11;
+$brand-info            : cyan;
+$brand-warning         : #334455;
+$brand-danger          : #ff00ff;
+$font-family-sans-serif: Tahoma, Geneva, sans-serif;
+
 // bootstrap 4
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../node_modules/bootstrap/scss/_variables';
+@import '../../../node_modules/bootstrap/scss/_mixins';
+@import '../../../node_modules/bootstrap/scss/_normalize.scss';
+@import '../../../node_modules/bootstrap/scss/_reboot';
+@import '../../../node_modules/bootstrap/scss/_grid';
+@import '../../../node_modules/bootstrap/scss/_buttons';
+@import '../../../node_modules/bootstrap/scss/_card';
