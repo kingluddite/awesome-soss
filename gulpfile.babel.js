@@ -17,41 +17,45 @@ const $ = gulpLoadPlugins();
 
 // the paths objects will save us a lot of path typing
 var paths = {
-	// for local development
-	'local': {
-		'src': {
-			'sass': './src/scss/',
-			'js': './src/js/',
-			'images': './src/img/',
-			'fonts': './src/fonts/',
-			'html': './src/'
-		},
-		'dist': {
-			'css': './dist/assets/css/',
-			'js': './dist/assets/js/',
-			'fonts': './dist/assets/fonts/',
-			'images': './dist/assets/img/',
-			'html': './dist/'
-		}
-	},
-	// for our production server
-	'production': {
-		'src': {
-			'html': './src/',
-			'sass': './src/scss/',
-			'js': './src/js/',
-			'images': './src/img/',
-			'fonts': './src/fonts/'
-		},
-		'dist': {
-			// example using Digital Ocean
-			'html': '/var/www/html/awesome-soss/',
-			'css': '/var/www/html/awesome-soss/assets/css/',
-			'js': '/var/www/html/awesome-soss/assets/js/',
-			'fonts': '/var/www/html/awesome-soss/assets/fonts/',
-			'images': '/var/www/html/awesome-soss/assets/img/'
-		}
-	}
+  // for local development
+  'local': {
+    'src': {
+      'lib': './lib/',
+      'nm': './node_modules/',
+      'sass': './src/scss/',
+      'js': './src/js/',
+      'images': './src/img/',
+      'fonts': './src/fonts/',
+      'html': './src/'
+    },
+    'dist': {
+      'css': './dist/assets/css/',
+      'js': './dist/assets/js/',
+      'fonts': './dist/assets/fonts/',
+      'images': './dist/assets/img/',
+      'html': './dist/'
+    }
+  },
+  // for our production server
+  'production': {
+    'src': {
+      'lib': './lib/',
+      'nm': './node_modules/',
+      'html': './src/',
+      'sass': './src/scss/',
+      'js': './src/js/',
+      'images': './src/img/',
+      'fonts': './src/fonts/'
+    },
+    'dist': {
+      // example using Digital Ocean
+      'html': '/var/www/html/awesome-soss/',
+      'css': '/var/www/html/awesome-soss/assets/css/',
+      'js': '/var/www/html/awesome-soss/assets/js/',
+      'fonts': '/var/www/html/awesome-soss/assets/fonts/',
+      'images': '/var/www/html/awesome-soss/assets/img/'
+    }
+  }
 };
 
 /**
@@ -64,19 +68,19 @@ var paths = {
 var environment = argv.production;
 
 function checkEnv() {
-	var currentEnv;
+  var currentEnv;
 
-	$.ifElse(
-		environment,
-		function () {
-			currentEnv = paths.production;
-		},
-		function () {
-			currentEnv = paths.local;
-		}
-	);
+  $.ifElse(
+    environment,
+    function () {
+      currentEnv = paths.production;
+    },
+    function () {
+      currentEnv = paths.local;
+    }
+  );
 
-	return currentEnv;
+  return currentEnv;
 }
 
 var currentEnv = checkEnv();
