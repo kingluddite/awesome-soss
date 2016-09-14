@@ -330,7 +330,7 @@ If you get an error because of npm trying to install node_modules, it most likel
 is a problem with memory allocation. All you need to do is read and follow this
 [article on creating a swapfile on Ubuntu](https://github.com/Cretezy/SwapUbuntu).
 
-## Tools Using
+## Ingredients
 * jshint with ES6
 * babel
   - Transpiling ES5 to ES6 (and future ES versions)
@@ -338,7 +338,6 @@ is a problem with memory allocation. All you need to do is read and follow this
   - Live reloading your website, but it’s not constrained to one browser or even one device
   - [video example](https://www.youtube.com/watch?v=wPIn5AS3DCk)
 * Gulp
-  - Development Dependencies
     + babel-cli
     + babel-plugin-transform-flow-strip-types
     + babel-preset-es2015-node5
@@ -370,9 +369,6 @@ is a problem with memory allocation. All you need to do is read and follow this
     + rimraf
     + run-sequence
     + yargs
-  - Dependencies
-    + bootstrap 4
-    + font-awesome
 * Node
 * Bootstrap 4
   - using npm
@@ -381,10 +377,22 @@ is a problem with memory allocation. All you need to do is read and follow this
   - src
 * productuction folder
   - dist
-* Facebook Flow
+* font-awesome
+* masonry-layout
+* animate.css
+* hover.css
+* tether
 * Git
   - git hooks
 * SSH
   - SSH public key
 * .editorconfig
 * not using bower and trying to do everything with node
+
+## To Be Baked In
+* Facebook Flow
+* Flight plan
+* Staging and DO subdomains
+* IP to domain on DO
+* Free email forwarding DO
+* individual gulp files instead of one large file

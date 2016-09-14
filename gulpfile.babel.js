@@ -2,25 +2,48 @@
 // Load Node Modules/Plugins
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
-// import browserSync from 'browser-sync';
 import del from 'del';
 
-var argv = require( 'yargs' ).argv;
-var browserSync = require( 'browser-sync' ).create();
-var gutil = require( 'gulp-util' );
-var runSequence = require( 'run-sequence' );
-var thePackage = require( './package.json' );
+const argv = require( 'yargs' ).argv;
+const browserSync = require( 'browser-sync' ).create();
+const gutil = require( 'gulp-util' );
+const runSequence = require( 'run-sequence' );
+const thePackage = require( './package.json' );
 // Remove existing docs and dist build
 
 const reload = browserSync.reload;
 const $ = gulpLoadPlugins();
+
+// 1. paths
+// 3. environment
+// 2. config
+// 4. banner
+// 4. Tasks
+// 4.a - html
+// vendor CSS
+// 4.b - Sass
+// 4.e - vendor JavaScript
+// 4.f - custom JavaScript
+// 4.c - images
+// 4.e - vendor fonts
+// 4.d - fonts
+// browser-sync
+// clean
+// watch
+
+/**
+ *
+ * Paths
+ *
+ */
 
 // the paths objects will save us a lot of path typing
 var paths = {
   // for local development
   'local': {
     'src': {
-      'lib': './lib/',
+      'jslib': './lib/js/',
+      'csslib': './lib/css/',
       'nm': './node_modules/',
       'sass': './src/scss/',
       'js': './src/js/',
@@ -39,7 +62,8 @@ var paths = {
   // for our production server
   'production': {
     'src': {
-      'lib': './lib/',
+      'jslib': './lib/js/',
+      'csslib': './lib/css/',
       'nm': './node_modules/',
       'html': './src/',
       'sass': './src/scss/',
@@ -72,10 +96,10 @@ function checkEnv() {
 
   $.ifElse(
     environment,
-    function () {
+    () => {
       currentEnv = paths.production;
     },
-    function () {
+    () => {
       currentEnv = paths.local;
     }
   );
@@ -85,33 +109,66 @@ function checkEnv() {
 
 var currentEnv = checkEnv();
 
-var banner = [
+/**
+ *
+ * Config
+ *
+ */
+
+var config = {
+  vendorCssSrc: [
+    // add all external css libraries here
+    currentEnv.src.nm + 'font-awesome/css/font-awesome.css',
+    currentEnv.src.nm + 'animate.css/animate.css',
+    currentEnv.src.nm + 'hover.css/css/hover.css',
+    currentEnv.src.nm + 'tether/css/tether.css'
+  ],
+  vendorJsSrc: [
+    // add all external js libraries here
+    currentEnv.src.nm + 'jquery/dist/jquery.js',
+    currentEnv.src.nm + 'jquery-validation/dist/jquery.validate.js',
+    currentEnv.src.nm + 'jquery-validation/dist/jquery.validate.unobtrusive.js',
+    currentEnv.src.nm + 'jquery-validation/dist/masonry-layout/dist/masonry.pkgd.js',
+    currentEnv.src.nm + 'tether/dist/js/tether.js',
+    currentEnv.src.nm + 'bootstrap/dist/js/bootstrap.js'
+  ],
+  vendorFonts: [
+    currentEnv.src.nm + 'font-awesome/fonts/'
+  ]
+}
+
+
+
+/**
+ *
+ * Banner
+ *
+ */
+
+const banner = [
   '/*!\n' +
   ' * <%= thePackage.name %>\n' +
   ' * <%= thePackage.title %>\n' +
   ' * <%= thePackage.url %>\n' +
   ' * @author <%= thePackage.author %>\n' +
   ' * @version <%= thePackage.version %>\n' +
-  ' * Copyright ' + new Date().getFullYear() + '. <%= thePackage.license %> licensed.\n' +
+  ' * Copyright ' + new Date().getFullYear() +
+  '. <%= thePackage.license %> licensed.\n' +
   ' */',
   '\n'
 ].join( '' );
 
-var config = {
-  jquerysrc: [
-        currentEnv.src.nm + "jquery-validation/dist/jquery.validate.js",
-        currentEnv.src.nm + "jquery-validation/dist/jquery.validate.unobtrusive.js"
-    ],
-  jquerybundle: currentEnv.src.lib + "jquery-bundle.js",
+/**
+ *
+ * Tasks
+ *
+ */
 
-  //JavaScript files that will be combined into a Bootstrap bundle
-  bootstrapsrc: [
-        currentEnv.src.nm + "jquery/dist/jquery.js",
-        currentEnv.src.nm + "tether/dist/js/tether.js",
-        currentEnv.src.nm + "bootstrap/dist/js/bootstrap.js"
-    ],
-  bootstrapbundle: currentEnv.src.lib + "bootstrap-bundle.js"
-}
+/**
+ *
+ * HTML
+ *
+ */
 
 gulp.task( 'html', () => {
   return gulp.src( currentEnv.src.html + '*.html' )
@@ -120,7 +177,25 @@ gulp.task( 'html', () => {
 
 /**
  *
- * Sass
+ * CSS
+ *
+ */
+
+// vendor css
+
+//build css lib scripts
+gulp.task( 'compile-css-lib', () => {
+  return gulp.src( config.vendorCssSrc )
+    .pipe( $.concat( 'compiled-bundle.css' ) )
+    .pipe( gulp.dest( currentEnv.dist.css ) )
+    .pipe( $.rename( 'compiled-bundle.min.css' ) )
+    .pipe( $.cssnano() )
+    .pipe( gulp.dest( currentEnv.dist.css ) );
+} );
+
+/**
+ *
+ * Sass (custom)
  *
  */
 
@@ -152,45 +227,29 @@ gulp.task( 'sass', () => {
     } ) );
 } );
 
-gulp.task( 'html', function () {
-  return gulp.src( currentEnv.src.html + '*.html' )
-    .pipe( gulp.dest( currentEnv.dist.html ) );
-} );
-
-/**
- *
- * Image Optimization
- *
- */
-
-gulp.task( 'images', function () {
-  // grab only the stuff in images with these extensions {png,jpg,gif,svg,ico}
-  return gulp.src( currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}' )
-    .pipe( $.newer( currentEnv.dist.images ) )
-    .pipe( $.imagemin( {
-      progressive: true
-    } ) )
-    .pipe( gulp.dest( currentEnv.dist.images ) );
-} );
-
-/**
- *
- * Fonts
- *
- */
-gulp.task( 'fonts', function () {
-  return gulp.src( 'src/fonts/**/*' )
-    .pipe( gulp.dest( 'dist/fonts' ) )
-} )
-
-
 /**
  *
  * JavaScript
  *
  */
 
-gulp.task( 'js', () => {
+// Vendor JavaScript
+
+//build js lib scripts
+gulp.task( 'compile-js-lib', () => {
+  return gulp.src( config.vendorJsSrc )
+    .pipe( $.sourcemaps.init() )
+    .pipe( $.concat( 'compiled-bundle.js' ) )
+    .pipe( gulp.dest( currentEnv.dist.js ) )
+    .pipe( $.rename( 'compiled-bundle.min.js' ) )
+    .pipe( $.uglify() )
+    .pipe( $.sourcemaps.write( './' ) )
+    .pipe( gulp.dest( currentEnv.dist.js ) );
+} );
+
+// Custom JavaScript
+
+gulp.task( 'custom-js', () => {
   gulp.src( currentEnv.src.js + 'scripts.js' )
     .pipe( $.sourcemaps.init() )
     .pipe( $.jshint( '.jshintrc' ) )
@@ -213,6 +272,40 @@ gulp.task( 'js', () => {
       once: true
     } ) );
 } );
+
+/**
+ *
+ * Image Optimization
+ *
+ */
+
+gulp.task( 'images', () => {
+  // grab only the stuff in images with these extensions {png,jpg,gif,svg,ico}
+  return gulp.src( currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}' )
+    .pipe( $.newer( currentEnv.dist.images ) )
+    .pipe( $.imagemin( {
+      progressive: true
+    } ) )
+    .pipe( gulp.dest( currentEnv.dist.images ) );
+} );
+
+/**
+ *
+ * Fonts
+ *
+ */
+
+// vendor fonts
+gulp.task( 'vendorFonts', () => {
+  return gulp.src( config.vendorFonts + '**/*.{woff,woff2,ttf}' )
+    .pipe( gulp.dest( currentEnv.dist.fonts ) )
+} )
+
+// custom fonts
+gulp.task( 'fonts', () => {
+  return gulp.src( currentEnv.src.fonts + '**/*.{woff,woff2,ttf}' )
+    .pipe( gulp.dest( currentEnv.dist.fonts ) )
+} )
 
 /**
  *
@@ -239,40 +332,10 @@ gulp.task( 'bs-reload', () => {
  * Cleanup - Blow up everything inside `dist/assets` when you run gulp
  *
  */
-// Synchronously delete the output script file(s)
-gulp.task( 'clean', del.bind( null, [ 'dist/assets/' ] ) );
 
+// Synchronously delete the lib and dist folders with every gulp run
+gulp.task( 'clean', del.bind( null, [ 'lib', 'dist' ] ) );
 
-//Create a jquery bundled file
-gulp.task( 'jquery-bundle', [ 'clean' ], function () {
-  return gulp.src( config.jquerysrc )
-    .pipe( $.concat( 'jquery-bundle.js' ) )
-    .pipe( gulp.dest( 'lib' ) );
-} );
-
-//Create a bootstrap bundled file
-gulp.task( 'bootstrap-bundle', [ 'clean' ], function () {
-  return gulp.src( config.bootstrapsrc )
-    .pipe( $.concat( 'bootstrap-bundle.js' ) )
-    .pipe( gulp.dest( 'lib' ) );
-} );
-
-// Combine and the vendor files from bower into bundles (output to the Scripts folder)
-gulp.task( 'bundle-scripts', [ 'jquery-bundle', 'bootstrap-bundle' ], function () {
-  // runSequence( [ 'jquery-bundle', 'bootstrap-bundle' ] );
-} );
-
-//build lib scripts
-gulp.task( 'compile-lib', [ 'bundle-scripts' ], function () {
-  return gulp.src( 'lib/*.js' )
-    .pipe( $.sourcemaps.init() )
-    .pipe( $.concat( 'compiled-bundle.js' ) )
-    .pipe( gulp.dest( currentEnv.dist.js ) )
-    .pipe( $.rename( 'compiled-bundle.min.js' ) )
-    .pipe( $.uglify() )
-    .pipe( $.sourcemaps.write( './' ) )
-    .pipe( gulp.dest( currentEnv.dist.js ) );
-} );
 
 /**
  *
@@ -280,8 +343,8 @@ gulp.task( 'compile-lib', [ 'bundle-scripts' ], function () {
  *
  */
 
-gulp.task( 'dist', [ 'html', 'sass', 'js', 'images', 'fonts', 'compile-lib', 'browser-sync' ], () => {
-
+gulp.task( 'dist', () => {
+  runSequence( [ 'html', 'sass', 'custom-js', 'images', 'fonts', 'vendorFonts', 'compile-js-lib', 'compile-css-lib' ], 'browser-sync' );
   // globbing
   // matches any file with a .scss extension in dist/scss or a child directory
   gulp.watch( currentEnv.src.sass + '**/*.scss', [ 'sass' ] );
