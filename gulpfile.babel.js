@@ -97,9 +97,25 @@ var banner = [
   '\n'
 ].join( '' );
 
+var config = {
+  jquerysrc: [
+        currentEnv.src.nm + "jquery-validation/dist/jquery.validate.js",
+        currentEnv.src.nm + "jquery-validation/dist/jquery.validate.unobtrusive.js"
+    ],
+  jquerybundle: currentEnv.src.lib + "jquery-bundle.js",
+
+  //JavaScript files that will be combined into a Bootstrap bundle
+  bootstrapsrc: [
+        currentEnv.src.nm + "jquery/dist/jquery.js",
+        currentEnv.src.nm + "tether/dist/js/tether.js",
+        currentEnv.src.nm + "bootstrap/dist/js/bootstrap.js"
+    ],
+  bootstrapbundle: currentEnv.src.lib + "bootstrap-bundle.js"
+}
+
 gulp.task( 'html', () => {
-	return gulp.src( currentEnv.src.html + '*.html' )
-		.pipe( gulp.dest( currentEnv.dist.html ) );
+  return gulp.src( currentEnv.src.html + '*.html' )
+    .pipe( gulp.dest( currentEnv.dist.html ) );
 } );
 
 /**
