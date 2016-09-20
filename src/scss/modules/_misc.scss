@@ -1,15 +1,17 @@
-::selection{
-  background: #333;
-  color: #fff;
+::selection {
+  background : $mine-shaft;
+  color      : $white;
   text-shadow: none;
 }
-::-moz-selection{
-  background: #333;
-  color: #fff;
+
+::-moz-selection {
+  background : $mine-shaft;
+  color      : $white;
   text-shadow: none;
 }
-::-webkit-selection{
-  background: #333;
-  color: #fff;
+
+::-webkit-selection {
+  background : $mine-shaft;
+  color      : $white;
   text-shadow: none;
 }
