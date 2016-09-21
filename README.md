@@ -17,6 +17,10 @@ Grab the files by cloning this repo.
 
 `$ git clone https://github.com/kingluddite/awesome-soss.git`
 
+Install Flow globally
+
+`$ npm install --global flow-bin`
+
 Install all required modules with npm
 
 `$ npm install`
@@ -395,4 +399,4 @@ is a problem with memory allocation. All you need to do is read and follow this
 * Staging and DO subdomains
 * IP to domain on DO
 * Free email forwarding DO
-* individual gulp files instead of one large file
+* [individual gulp files instead of one large file](http://macr.ae/article/splitting-gulpfile-multiple-files.html)
