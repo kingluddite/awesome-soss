@@ -1,4 +1,5 @@
 /* @flow */
+'use strict';
 ( function ( $, window, document, undefined ) {
 
   $( function () {
