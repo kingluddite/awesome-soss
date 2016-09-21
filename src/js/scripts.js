@@ -1,5 +1,4 @@
 /* @flow */
-
 ( function ( $, window, document, undefined ) {
 
   $( function () {
