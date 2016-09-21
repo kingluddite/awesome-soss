@@ -347,11 +347,27 @@ gulp.task( 'dist', () => {
   // globbing
   // matches any file with a .scss extension in dist/scss or a child directory
   gulp.watch( currentEnv.src.sass + '**/*.scss', [ 'sass' ] );
-  gulp.watch( currentEnv.src.js + '*.js', [ 'js' ] );
+  gulp.watch( currentEnv.src.js + '*.js', [ 'custom-js' ] );
   gulp.watch( currentEnv.src.html + '*.html', [ 'html', 'bs-reload' ] );
   gulp.watch( currentEnv.src.images + '**/**/*.{png,jpg,gif,svg,ico}', [ 'images' ] );
 } );
 
-gulp.task( 'default', [ 'clean' ], () => {
+// flow runs here and enables us to strongly type
+// our variables
+gulp.task( 'flow', shell.task( [
+	'flow'
+], {
+  ignoreErrors: true
+} ) );
+
+// now we can write ES6 code in our src file
+// and it will be output into the app folder
+// we'll then take that app/script.js and minify that
+// and rename to script.min.js in the dist folder
+gulp.task( 'babel', shell.task( [
+	'babel src --out-dir app'
+] ) );
+
+gulp.task( 'default', [ 'clean', 'flow', 'babel' ], () => {
   gulp.start( 'dist' );
 } );
