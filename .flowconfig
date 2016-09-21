@@ -1,7 +1,7 @@
 [ignore]
 .*/node_modules/babel*
 .*/node_modules/babylon/.*
-.*/app/.*
+.*/dist/.*
 [include]
 [libs]
 [options]

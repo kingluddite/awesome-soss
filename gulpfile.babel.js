@@ -3,10 +3,11 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
+import shell from 'gulp-shell';
 
 const argv = require( 'yargs' ).argv;
 const browserSync = require( 'browser-sync' ).create();
-const gutil = require( 'gulp-util' );
+// const gutil = require( 'gulp-util' );
 const runSequence = require( 'run-sequence' );
 const thePackage = require( './package.json' );
 // Remove existing docs and dist build
@@ -46,7 +47,7 @@ var paths = {
       'csslib': './lib/css/',
       'nm': './node_modules/',
       'sass': './src/scss/',
-      'js': './src/js/',
+      'js': './app/js/',
       'images': './src/img/',
       'fonts': './src/fonts/',
       'html': './src/'
@@ -62,8 +63,6 @@ var paths = {
   // for our production server
   'production': {
     'src': {
-      'jslib': './lib/js/',
-      'csslib': './lib/css/',
       'nm': './node_modules/',
       'html': './src/',
       'sass': './src/scss/',
@@ -334,7 +333,7 @@ gulp.task( 'bs-reload', () => {
  */
 
 // Synchronously delete the lib and dist folders with every gulp run
-gulp.task( 'clean', del.bind( null, [ 'lib', 'dist' ] ) );
+gulp.task( 'clean', del.bind( null, [ 'lib', 'app', 'dist' ] ) );
 
 
 /**
