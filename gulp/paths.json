@@ -1,0 +1,36 @@
+{
+  "local": {
+    "src": {
+      "nm": "./node_modules/",
+      "sass": "./src/scss/",
+      "js": "./src/js/",
+      "images": "./src/img/",
+      "fonts": "./src/fonts/",
+      "html": "./src/"
+    },
+    "dist": {
+      "css": "./dist/assets/css/",
+      "js": "./dist/assets/js/",
+      "fonts": "./dist/assets/fonts/",
+      "images": "./dist/assets/img/",
+      "html": "./dist/"
+    }
+  },
+  "production": {
+    "src": {
+      "nm": "./node_modules/",
+      "html": "./src/",
+      "sass": "./src/scss/",
+      "js": "./src/js/",
+      "images": "./src/img/",
+      "fonts": "./src/fonts/"
+    },
+    "dist": {
+      "html": "/var/www/html/awesome-soss/",
+      "css": "/var/www/html/awesome-soss/assets/css/",
+      "js": "/var/www/html/awesome-soss/assets/js/",
+      "fonts": "/var/www/html/awesome-soss/assets/fonts/",
+      "images": "/var/www/html/awesome-soss/assets/img/"
+    }
+  }
+}
