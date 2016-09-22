@@ -1,13 +1,15 @@
 'use strict';
 
+// imports
 // variables
+// paths
 // environment
 // config
 // banner
 // Tasks
 //   a - html
 //   b - vendor CSS
-//   c - Sass
+//   c - Sass (custom CSS)
 //   d - vendor JavaScript
 //   e - custom JavaScript
 //   f - images
@@ -23,7 +25,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import shell from 'gulp-shell';
 
-
 // define constants
 const argv = require( 'yargs' ).argv;
 const browserSync = require( 'browser-sync' ).create();
@@ -31,95 +32,44 @@ const gutil = require( 'gulp-util' ); // equivalent of console.log - 'gutil.log(
 const reload = browserSync.reload;
 const $ = gulpLoadPlugins();
 
-var paths = require( './paths.json' );
-/**
- *
- * Environment Check
- *
- */
+// file paths to all assets
+var paths = require( './gulp/paths.json' );
 
 // are we working locally or on our production server?
-
 var environment = argv.production;
-
-var checkEnv = require( './env-check.js' )( $, environment, paths );
+var checkEnv = require( './gulp/env-check.js' )( $, environment, paths );
 var currentEnv = checkEnv();
-var config = require( './config.js' )( checkEnv() );
+var config = require( './gulp/config.js' )( checkEnv() );
 
 function getTask( task ) {
   return require( './gulp/' + task )( gulp, $, paths, config, currentEnv, browserSync );
 }
 
-/**
- *
- * Banner
- *
- */
+const banner = require( './gulp/banner.js' )();
 
-const banner = require( './banner.js' )();
-
-/**
- *
- * Tasks
- *
- */
-
-/**
- *
- * HTML
- *
- */
-
+// HTML
 gulp.task( 'html', require( './gulp/html' )( gulp, $, paths, config, currentEnv, browserSync ) );
 
-/**
- *
- * CSS
- *
- */
+// CSS
 
-// vendor css
-
-//build css lib scripts
-
+// build css lib scripts
 gulp.task( 'compile-css-lib', getTask( 'compile-css-lib' ) );
 
-/**
- *
- * Sass (custom)
- *
- */
-
+// Sass (css)
 gulp.task( 'sass', getTask( 'sass' ) );
 
-/**
- *
- * JavaScript
- *
- */
+// JavaScript
 
-gulp.task( 'custom-js', getTask( 'custom-js' ) );
-
-// Vendor JavaScript
-
-//build js lib scripts
-
+// vendor js (3rd Party)
 gulp.task( 'compile-js-lib', getTask( 'compile-js-lib' ) );
 
-/**
- *
- * Image Optimization
- *
- */
+// custom js
+gulp.task( 'custom-js', getTask( 'custom-js' ) );
 
+// image optimization
 gulp.task( 'images', getTask( 'images' ) );
 
-/**
- *
- * Fonts
- *
- */
-
+// Fonts
 // vendor fonts
 gulp.task( 'vendor-fonts', () => {
 
